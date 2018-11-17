@@ -20,7 +20,11 @@ while data['totalMinutes'] < data['weeklyGoal'] * 60:
     print('How many minutes of Spanish did you do today?')
     data['totalMinutes'] += int(input())
     
-    percentageDone = str(data['totalMinutes'] / (data['weeklyGoal'] * 60))
-    
-    print('You have completed ' + percentageDone[0:4] + '% of your target')
-    print('Keep going, you can do it!!')
+    percentageDone = str((data['totalMinutes'] / (data['weeklyGoal'] * 60)) * 100)
+       
+    if data['totalMinutes'] < data['weeklyGoal'] * 60:
+        print('You have completed ' + percentageDone[0:2] + '% of your target')
+        print('Keep going, you can do it!!')
+    elif data['totalMinutes'] >= data['weeklyGoal'] * 60:
+
+        print('Well done!! You completed your weekly target')
