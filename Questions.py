@@ -9,12 +9,33 @@ data = { 'spanish': {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : [] },
         'teaching' : {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : []}, 
         'programming' : {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : []}}
 
+totals = { 'spanish' : 0,
+          'teaching' : 0,
+          'programming' : 0,
+          'total': 0}
+  
 class Task:
     def __init__(self, field, description, time, num):
         self.field = field
         self.description = description
         self.time = time
         self.num = num
+        self.percentage = 0
+        
+    def get_percentage(self):
+        percentage = self.time / data[self.field]['weekly_goal']
+        self.percentage = percentage
+        
+        
+def calculate_total_time(field):
+    total = 0
+    for task in data[field]['tasks']:
+        total += task.time
+    return (total / 60) * 100
+
+def get_percentages(field):
+        for task in data[field]['tasks']:
+           task.get_percentage()           
 
 def set_weekly_goal():
     print("What weekly goal would you like to set?")
@@ -70,15 +91,55 @@ def delete_task():
 def view_tasks():
     print("What type of tasks do you want to see?")
     print("If you want to see all of them type 'all'")
-    response = input()
-    if respsonse == "all":
+    response = input().lower()
+    if response == "all":
         for field in data:
-            ## nested loop to print all of the tasks
-   
-    
-    
+            get_percentages(field)
+            for task in data[field]['tasks']:
+                print(f"Field: {task.field[0].upper() + task.field[1:]} Number: {task.num} Description: {task.description[0].upper() + task.description[1:]} Time: {task.time} minutes Percentage of weekly goal: {task.percentage}%")
+    elif response == "programming":
+        get_percentages(response)
+        for task in data["programming"]["tasks"]:
+           print(f"Number: {task.num} Description: {task.description[0].upper() + task.description[1:]} Time: {task.time} minutes Percentage of weekly goal: {task.percentage}%")
+    elif response == "teaching":
+        get_percentages(response)
+        for task in data["teaching"]["tasks"]:
+           print(f"Number: {task.num} Description: {task.description[0].upper() + task.description[1:]} Time: {task.time} minutes Percentage of weekly goal: {task.percentage}%")
+    elif response == "spanish":
+        get_percentages(response)
+        for task in data["spanish"]["tasks"]:
+           print(f"Number: {task.num} Description: {task.description[0].upper() + task.description[1:]} Time: {task.time} minutes Percentage of weekly goal: {task.percentage}%")
+    else:
+       print("You have not entered a correct field")
 
+def view_percentage_completed():
+    print("What type of tasks do you want to see?")
+    print("If you want to see all of them type 'all'")
+    response = input().lower()
+    if response == 'all':
+        
+        week_total = 0
+        for task in data:
+            week_total += task['weekly_goal']
+        
+        
 
+        
+        
+        prog_total = calculate_total_time('programming')
+        span_total = calculate_total_time('spanish')
+        teach_total = calculate_total_time('teaching') 
+        
+        print(f"You have completed {(prog_total + span_total + teach_total) / week_total} of your overall weekly goal")
+        
+        print("we haven't done this yet")
+    elif response == 'spanish':
+        print(f"You have completed {str((calculate_total_time(response)) / (data['spanish']['weekly_goal']))[0:3]}% of your weekly goal")
+    elif response == 'programming':
+        print(f"You have completed {str((calculate_total_time(response)) / (data['programming']['weekly_goal']))[0:3]}% of your weekly goal")
+    elif response == 'teaching':
+        print(f"You have completed {str((calculate_total_time(response)) / (data['teaching']['weekly_goal']))[0:3]}% of your weekly goal")
+    
 def question():    
     print("How would you like to use your task tracker?")
     print("1. Set goals for the week\n2. Add task\n3. Delete Task\n4. View tasks this week\n5. View percentage of goals completed ")
@@ -92,16 +153,17 @@ def question():
         delete_task()
     elif ans == 4:
         view_tasks()
+    elif ans == 5:
+        # of overall weekly target
+        view_percentage_completed()
+       
     
 
-    
-    
+        
+data['spanish']['weekly_goal'] = 600
 
-# questions
-
-# what would you like to do
-# 1. set goals for the week
-# 1. add task
-# 2. delete task
-# 3. view tasks from this week - spanish, teaching, programming
-# 4. view percentage of goal completed
+data['spanish']['tasks'].append(Task('spanish', 'asd', 34, 1))
+data['spanish']['tasks'].append(Task('spanish', 'asd', 23, 1))
+data['spanish']['tasks'].append(Task('spanish', 'asd', 2, 1))
+data['spanish']['tasks'].append(Task('spanish', 'asd', 7, 1))
+data['spanish']['tasks'].append(Task('spanish', 'asd', 64, 1))
