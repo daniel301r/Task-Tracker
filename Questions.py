@@ -13,7 +13,8 @@ totals = { 'spanish' : 0,
           'teaching' : 0,
           'programming' : 0,
           'total': 0}
-  
+        
+
 class Task:
     def __init__(self, field, description, time, num):
         self.field = field
@@ -117,22 +118,18 @@ def view_percentage_completed():
     print("If you want to see all of them type 'all'")
     response = input().lower()
     if response == 'all':
-        
         week_total = 0
-        for task in data:
-            week_total += task['weekly_goal']
-        
-        
-
-        
+        for field, goal in data.items():
+            for key in goal.keys():
+                if 'weekly_goal' in key:
+                    week_total += goal[key]
         
         prog_total = calculate_total_time('programming')
         span_total = calculate_total_time('spanish')
         teach_total = calculate_total_time('teaching') 
         
-        print(f"You have completed {(prog_total + span_total + teach_total) / week_total} of your overall weekly goal")
-        
-        print("we haven't done this yet")
+        print(f"You have completed {str((prog_total + span_total + teach_total) / week_total)[0:3]}% of your overall weekly goal")
+
     elif response == 'spanish':
         print(f"You have completed {str((calculate_total_time(response)) / (data['spanish']['weekly_goal']))[0:3]}% of your weekly goal")
     elif response == 'programming':
