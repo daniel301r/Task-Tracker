@@ -28,26 +28,22 @@ class Task:
         self.percentage = percentage
         
         
-def calculate_total_time(field):
-    total = 0
-    for task in data[field]['tasks']:
-        total += task.time
-    return (total / 60) * 100
+         
 
-def get_percentages(field):
-        for task in data[field]['tasks']:
-           task.get_percentage()           
+# set weekly goals
 
 def set_weekly_goal():
     print("What weekly goal would you like to set?")
     field = input()
     if field in data.keys():
         print(f"How many hours of {field} do you want to do?")
-        data[field]['weekly_goal'] = int(input())
-        print(f"You want to do {data[field]['weekly_goal']} hours of {field} this week")     
+        hours = int(input())
+        data[field]['weekly_goal'] = hours * 60 
+        print(f"You want to do {hours} hours of {field} this week")     
     else:
         print(f"{field[0].upper() + field[1:]} is not in your weekly goals")
-    
+
+# adding the instances
          
 def task_description():
         print("What type of task did you do?")
@@ -67,7 +63,9 @@ def task_description():
         task = Task(field, description, time, num)
         
         data[field]['tasks'].append(task)
-        
+
+# delete task
+
 def delete_task():
     print("What type of task do you want to delete?")
     field = input()
@@ -79,7 +77,6 @@ def delete_task():
     delete_num = int(input())
     
     # find index of task in list
-    # ** returning the else statement before deleting the object from the list
     for task in data[field]["tasks"]:
         if task.num == delete_num:
             task_index = data[field]["tasks"].index(task)
@@ -88,7 +85,12 @@ def delete_task():
         else:
             print("You entered a wrong number")
 
-            
+# view the individual tasks
+
+def get_percentages(field):
+        for task in data[field]['tasks']:
+           task.get_percentage() 
+
 def view_tasks():
     print("What type of tasks do you want to see?")
     print("If you want to see all of them type 'all'")
@@ -113,6 +115,18 @@ def view_tasks():
     else:
        print("You have not entered a correct field")
 
+
+# view completed percentages of tasks
+
+def calculate_total_time(field):
+    total = 0
+    for task in data[field]['tasks']:
+        total += task.time
+    return total 
+
+def print_field_percentages(field):
+    print(f"You have completed {str((calculate_total_time(field)) / (data[field]['weekly_goal']))[0:3]}% of your weekly goal")
+
 def view_percentage_completed():
     print("What type of tasks do you want to see?")
     print("If you want to see all of them type 'all'")
@@ -131,12 +145,18 @@ def view_percentage_completed():
         print(f"You have completed {str((prog_total + span_total + teach_total) / week_total)[0:3]}% of your overall weekly goal")
 
     elif response == 'spanish':
-        print(f"You have completed {str((calculate_total_time(response)) / (data['spanish']['weekly_goal']))[0:3]}% of your weekly goal")
+        print_field_percentages(response)
     elif response == 'programming':
-        print(f"You have completed {str((calculate_total_time(response)) / (data['programming']['weekly_goal']))[0:3]}% of your weekly goal")
+        print_field_percentages(response)
     elif response == 'teaching':
-        print(f"You have completed {str((calculate_total_time(response)) / (data['teaching']['weekly_goal']))[0:3]}% of your weekly goal")
+        print_field_percentages(response)
     
+
+
+
+
+
+
 def question():    
     print("How would you like to use your task tracker?")
     print("1. Set goals for the week\n2. Add task\n3. Delete Task\n4. View tasks this week\n5. View percentage of goals completed ")
@@ -151,12 +171,9 @@ def question():
     elif ans == 4:
         view_tasks()
     elif ans == 5:
-        # of overall weekly target
         view_percentage_completed()
-       
-    
-
         
+# just some data so there is a bit of it inside the data structure     
 data['spanish']['weekly_goal'] = 600
 
 data['spanish']['tasks'].append(Task('spanish', 'asd', 34, 1))
@@ -164,3 +181,7 @@ data['spanish']['tasks'].append(Task('spanish', 'asd', 23, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 2, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 7, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 64, 1))
+
+# need to format the percentages - i.e. times by 100 so it gives us the percent
+
+# add some new features
