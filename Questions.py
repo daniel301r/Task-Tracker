@@ -4,7 +4,7 @@ Created on Wed Dec  5 13:36:56 2018
 
 @author: Me
 """
-
+# data structures
 data = { 'spanish': {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : [] },
         'teaching' : {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : []}, 
         'programming' : {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : []}}
@@ -28,10 +28,7 @@ class Task:
         self.percentage = percentage
         
         
-         
-
 # set weekly goals
-
 def set_weekly_goal():
     print("What weekly goal would you like to set?")
     field = input()
@@ -43,8 +40,7 @@ def set_weekly_goal():
     else:
         print(f"{field[0].upper() + field[1:]} is not in your weekly goals")
 
-# adding the instances
-         
+# adding the instances        
 def task_description():
         print("What type of task did you do?")
         field = input()
@@ -65,7 +61,6 @@ def task_description():
         data[field]['tasks'].append(task)
 
 # delete task
-
 def delete_task():
     print("What type of task do you want to delete?")
     field = input()
@@ -85,12 +80,11 @@ def delete_task():
         else:
             print("You entered a wrong number")
 
-# view the individual tasks
-
 def get_percentages(field):
         for task in data[field]['tasks']:
            task.get_percentage() 
 
+# view the individual tasks
 def view_tasks():
     print("What type of tasks do you want to see?")
     print("If you want to see all of them type 'all'")
@@ -117,7 +111,6 @@ def view_tasks():
 
 
 # view completed percentages of tasks
-
 def calculate_total_time(field):
     total = 0
     for task in data[field]['tasks']:
@@ -151,12 +144,7 @@ def view_percentage_completed():
     elif response == 'teaching':
         print_field_percentages(response)
     
-
-
-
-
-
-
+# initial start questions
 def question():    
     print("How would you like to use your task tracker?")
     print("1. Set goals for the week\n2. Add task\n3. Delete Task\n4. View tasks this week\n5. View percentage of goals completed ")
@@ -175,7 +163,6 @@ def question():
         
 # just some data so there is a bit of it inside the data structure     
 data['spanish']['weekly_goal'] = 600
-
 data['spanish']['tasks'].append(Task('spanish', 'asd', 34, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 23, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 2, 1))
@@ -183,5 +170,3 @@ data['spanish']['tasks'].append(Task('spanish', 'asd', 7, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 64, 1))
 
 # need to format the percentages - i.e. times by 100 so it gives us the percent
-
-# add some new features
