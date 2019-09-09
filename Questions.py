@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Dec  5 13:36:56 2018
-
-@author: Me
-"""
 # data structures
 data = { 'spanish': {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : [] },
         'teaching' : {'weekly_goal' : 0, 'total_minutes': 0, 'tasks' : []}, 
@@ -168,5 +162,3 @@ data['spanish']['tasks'].append(Task('spanish', 'asd', 23, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 2, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 7, 1))
 data['spanish']['tasks'].append(Task('spanish', 'asd', 64, 1))
-
-# need to format the percentages - i.e. times by 100 so it gives us the percent
